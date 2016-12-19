@@ -1,5 +1,6 @@
-#include <MotorContrl.h>
 #include <SoftwareSerial.h>
+#include <MotorContrl.h>
+
 /*
     Steuerung :
     1 -> Rückwärts
@@ -90,7 +91,10 @@ void loop()
     bt_input = BT.read();
     BT.println("Bluetooth Rückmeldung : Hat folgenden Wert empfangen: ");
     BT.println(bt_input);
+   
     //------------------------- Set Speed --------------------------
+    /* Currently not working
+    
     if(bt_input == '8')
     {
       MOTOR_B.Set_Speed(MOTOR_A.Give_Speed());
@@ -135,6 +139,7 @@ void loop()
       }
     }
     //--------------------------------------------------------------
+    */    
     if(bt_input != '3' && bt_input != '4')
     {
       MOTOR_B.Set_Speed(MOTOR_A.Give_Speed());
