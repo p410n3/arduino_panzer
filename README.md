@@ -1,2 +1,2 @@
-# arduino_panzer
-A school project for a Arduino Driven controllable Tank. With Bluetooth, Ultrasonic-Sensors and Linetracker.
+# Arduino_panzer
+A school project for a Arduino-driven, controllable Tank. With Bluetooth, Ultrasonic-Sensors and a Linetracker.
