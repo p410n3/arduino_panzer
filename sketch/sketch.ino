@@ -1,6 +1,8 @@
 #include <SoftwareSerial.h>
 #include <MotorContrl.h>
 
+
+
 /*
     Steuerung :
  1 -> Rückwärts
@@ -16,7 +18,7 @@
  MOTOR_B => Linke Seite
  */
 
-SoftwareSerial BT(10,11); //[BT-Adapter TX 10, RX 11]
+SoftwareSerial BT(10,11); //[BT-Adapter TX 10, RX 11] 11
 
 int aPhase[2] = {
   2, 3};    //[MotorA]Pin APHASE des Motortreibers an Digital Pin 2,3 vom Arduino
@@ -67,17 +69,17 @@ int echo3=9;
 long dauer3=0;
 long entfernung3=0;
 
-
 //Motor MOTOR_A(aEnable, aPhase);
 //Motor MOTOR_B(bEnable, bPhase);
-
 
 void setup() 
 { 
   //Bluetooth initialisieren
   BT.begin(9600);
   BT.println("Bluetooth initialized");
-
+  
+  
+  
   //Ultraschall sensor
   Serial.begin (9600);
   pinMode(trigger1, OUTPUT);
@@ -90,9 +92,6 @@ void setup()
   Serial.begin (9600);
   pinMode(trigger3, OUTPUT);
   pinMode(echo3, INPUT);
-
-
-
 }
 
 void loop() 
@@ -240,7 +239,6 @@ void loop()
               //Ab hier ist Ultraschallsensor
               if (bt_input == '7')
               {
-
                 do
                 {             
                   //INIT US-Sensor
@@ -253,7 +251,6 @@ void loop()
 
                   dauer1 = pulseIn(echo1, HIGH);
                   entfernung1 = microsecondsToCentimeters(dauer1);
-
 
                   digitalWrite(trigger2, LOW);
                   //delayMicroseconds(2);
@@ -292,7 +289,6 @@ void loop()
                    BT.println(entfernung3);
                    */
 
-
                   //links < 10
                   if(entfernung2 < 10)
                   {
@@ -315,8 +311,7 @@ void loop()
                   }
                   //mitte OK
                   else if (entfernung1 > 10)
-                  {
-                    
+                  { 
                     MOTOR_A.Fahren(2, 150);
                     MOTOR_B.Fahren(2, 150);
                     lastPhaseA=2;
@@ -326,23 +321,19 @@ void loop()
                     lastSpeedA = 150;
                     lastSpeedB = 150;
                   }
-                  //rückwärts
+                  //rückwärts + drehen wenn mitte < 10 
                   else if(entfernung1 < 10)
                   {
-                    MOTOR_A.Fahren(1, 150);
+                    MOTOR_A.Fahren(1, 50);
                     MOTOR_B.Fahren(1, 150);
                     lastPhaseA=1;
                     lastPhaseB=1;
                     lastSpeedA = MOTOR_A.Give_Speed();
                     lastSpeedB = MOTOR_B.Give_Speed();
-                    lastSpeedA = 150;
+                    lastSpeedA = 50;
                     lastSpeedB = 150;
-                    
-                  }  
-                  
-                 
-                  
-                  //Only reads bt inout when soemthing is send. Maybe
+                  }     
+                  //Only reads bt inout when soemthing is send.
                   if(BT.available() > 0)
                   {
                     bt_input = BT.read();
@@ -357,9 +348,3 @@ void loop()
     }
   }
 } 
-
-
-
-
-
-
